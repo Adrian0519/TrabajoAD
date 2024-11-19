@@ -12,7 +12,7 @@ public class SinglettonMySQL {
     private SinglettonMySQL(){
         try {
             this.connection = DriverManager.getConnection(url, usuario, clave);
-        }catch(SQLException sqle) {
+        }catch(SQLException e) {
             System.out.println("Error al abrir la conexión");
         }
     }

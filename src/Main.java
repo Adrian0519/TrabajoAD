@@ -1,9 +1,11 @@
+import java.sql.SQLException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        Metodos metodos=new Metodos();
         Scanner scanner=new Scanner(System.in);
         int eleccion=99;
         while (eleccion!=0){
@@ -41,7 +43,21 @@ public class Main {
                     System.out.println("Dime el nombre de la categoria que deseas crear");
                     String nombreCategoria= scanner.next();
                     scanner.nextLine();
+                    metodos.crearCategoria(nombreCategoria);
                     break;
+                case 2:
+                    System.out.println("Dime el nombre del proveedor");
+                    String nombre= scanner.next();
+                    scanner.nextLine();
+                    System.out.println("Inserte el NIF");
+                    String nif= scanner.next();
+                    scanner.nextLine();
+                    System.out.println("Necesito el tlf");
+                    int tlf= scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ahora inserte el mail");
+                    String mail= scanner.next();
+                    scanner.nextLine();
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
             }

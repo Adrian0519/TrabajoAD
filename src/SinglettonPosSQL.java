@@ -4,14 +4,14 @@ import java.sql.SQLException;
 
 public class SinglettonPosSQL {
     private static Connection connection;
-    private final String usuario = "postgres'";
+    private final String usuario = "postgres";
     private final String clave = "abc123.";
     private final String url ="jdbc:postgresql://localhost:5432/proyecto";
 
     private SinglettonPosSQL(){
         try {
             this.connection = DriverManager.getConnection(url, usuario, clave);
-        }catch(SQLException sqle) {
+        }catch(SQLException e) {
             System.out.println("Error al abrir la conexión");
         }
     }

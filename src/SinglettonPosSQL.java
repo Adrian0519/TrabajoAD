@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class SinglettonPosSQL {
     private static Connection connection;
-    private final String usuario = "postgres'";
+    private final String usuario = "postgres";
     private final String clave = "abc123.";
     private final String url ="jdbc:postgresql://localhost:5432/proyecto";
 

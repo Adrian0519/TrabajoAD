@@ -9,20 +9,20 @@ email varchar(100)
 
 
 create table almacenes(
-id_almacen serial  primary key,
+id_almacen int primary key,
 nombre_almacen Varchar(100),
 ubicacion varchar(100)
 );
 
 create table categorias(
-id_categoria serial primary key,
-nombre_categoria varchar(100)
+id_categoria int primary key,
+nombre_categorias varchar(100)
 );
 
 create table proveedores(
-id_proveedor serial primary key,
+id_proveedor int primary key,
 nombre_proveedor varchar(100),
-contacto objetoContact.contacto_type
+contacto objetoContact.contacto_type 
 );
 
 create table productos(

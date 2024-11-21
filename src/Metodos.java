@@ -20,7 +20,8 @@ public class Metodos  {
                 System.out.println("Se produjo un error durante la creacion ");
             }
           } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.toString());
+
             }
     }
 

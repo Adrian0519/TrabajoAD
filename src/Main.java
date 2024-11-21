@@ -58,8 +58,37 @@ public class Main {
                     System.out.println("Ahora inserte el mail");
                     String mail= scanner.next();
                     scanner.nextLine();
+                    metodos.crearNuevoProveedor(nombre,nif,tlf,mail);
+                    break;
+                case 3:
+                    System.out.println("Dime el nombre del provedor");
+                    int id= scanner.nextInt();
+                    scanner.nextLine();
+                    metodos.eliminarProveedor(id);
+                    break;
+                case 4:
+                    System.out.println("Inserta el nombre del usuario");
+                    String nombreInsertar=scanner.next();
+                    scanner.nextLine();
+                    System.out.println("Insertar el mail del usuario");
+                    String mailInsertar= scanner.next();
+                    scanner.nextLine();
+                    System.out.println("Por ultimo el anho de nacimiento");
+                    int insertarNacimiento=scanner.nextInt();
+                    scanner.nextLine();
+                    metodos.crearUsuario(nombreInsertar,mailInsertar,insertarNacimiento);
+                    break;
+                case 5:
+                    System.out.println("Inserta el id del usuario a eliminar");
+                    int idEliminar=scanner.nextInt();
+                    scanner.nextLine();
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
+                    break;
+                default:
+                    System.out.println("Dato incorrecto introduzca de nuevo el numero");
+                    break;
             }
 
 

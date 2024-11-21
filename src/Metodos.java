@@ -55,6 +55,41 @@ public class Metodos  {
             e.printStackTrace();
         }
     }
+public void eliminarProveedor(int id) throws SQLException {
+        String senciaSQL="Delete  from proveedores where id_proveedor= ? ";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement= posSQL.prepareStatement(senciaSQL);
+            preparedStatement.setInt(1,id);
+            int comprobar=0;
+            if (comprobar>=1){
+                System.out.println("Se elimino de forma exitosa el proveedor");
+            }else {
+                System.out.println("No hay ningun proveedor con dicho id");
+            }
+        }catch (SQLException e){
+            System.out.println(e.toString());
+        }
+}
 
+public void crearUsuario(String nombre, String email, int anho_nacimiento) throws SQLException {
+        String sentenciaSQL="Insertr into usuarios (nombre, email, ano_nacimiento) values (?, ?, ?)";
+        PreparedStatement preparedStatement;
+
+        try {
+            preparedStatement=mySQL.prepareStatement(sentenciaSQL);
+            preparedStatement.setString(1,nombre);
+            preparedStatement.setString(2,email);
+            preparedStatement.setInt(3,anho_nacimiento);
+            int comprobacion= preparedStatement.executeUpdate();
+            if (comprobacion>=1){
+                System.out.println("Datos del usario insertados correctamente");
+            }else {
+                System.out.println("Error en la inseccion de datos");
+            }
+        }catch (SQLException e){
+            System.out.println(e.toString());
+        }
+}
 
 }

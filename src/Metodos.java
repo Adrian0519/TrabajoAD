@@ -46,23 +46,24 @@ public class Metodos  {
         }
     }
 public void eliminarProveedor(int id) throws SQLException {
-        String sentenciaProducto="Delete from productos where id_prveedor = ?";
-        String sacarIDProveedor="select id_producto from productos where id_proveedor = ?";
-        String sentenciaAlmacen="Delete from almacen_productos where id_producto ";
+        String sentenciaProducto="Delete from productos where id_proveedor = ?";
+        String sentenciaAlmacen="Delete from almacenes_productos where id_producto in (select id_producto from productos where id_proveedor = ?)";
         String senciaProveedorL="Delete from proveedores where id_proveedor = ?";
         PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement1;
+        PreparedStatement preparedStatement2;
         try {
-            ResultSet resultSet;
-            preparedStatement= posSQL.prepareStatement(sacarIDProveedor);
-            resultSet= preparedStatement.executeQuery();
-            if (resultSet.next()){
-                int eliminacionAlmacen=resultSet.getInt(1);
-            }
             preparedStatement= posSQL.prepareStatement(sentenciaAlmacen);
-            preparedStatement= posSQL.prepareStatement(sentenciaProducto);
-            preparedStatement= posSQL.prepareStatement(senciaProveedorL);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+            preparedStatement1= posSQL.prepareStatement(sentenciaProducto);
+            preparedStatement1.setInt(1,id);
+            preparedStatement1.executeUpdate();
+            preparedStatement2= posSQL.prepareStatement(senciaProveedorL);
+            preparedStatement2.setInt(1,id);
+            preparedStatement2.executeUpdate();
             int comprobar= preparedStatement.executeUpdate();
-            if (comprobar>=0){
+            if (comprobar>0){
                 System.out.println("Se elimino de forma exitosa el proveedor");
             }else {
                 System.out.println("No hay ningun proveedor con dicho id");

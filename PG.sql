@@ -2,7 +2,7 @@ create schema objetoContact;
 
 Create type objetoContact.contacto_type as(
 nombre_contacto varchar(100),
-nif int,
+nif Varchar(20),
 telefono int,
 email varchar(100)
 );
@@ -16,7 +16,7 @@ ubicacion varchar(100)
 
 create table categorias(
 id_categoria serial primary key,
-nombre_categorias varchar(100)
+nombre_categoria varchar(100)
 );
 
 create table proveedores(

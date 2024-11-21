@@ -61,7 +61,7 @@ public class Main {
                     metodos.crearNuevoProveedor(nombre,nif,tlf,mail);
                     break;
                 case 3:
-                    System.out.println("Dime el nombre del provedor");
+                    System.out.println("Dime el id del provedor");
                     int id= scanner.nextInt();
                     scanner.nextLine();
                     metodos.eliminarProveedor(id);

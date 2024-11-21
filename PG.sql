@@ -1,5 +1,5 @@
 create schema objetoContact;
-
+-- Comentado por mateo
 Create type objetoContact.contacto_type as(
 nombre_contacto varchar(100),
 nif int,

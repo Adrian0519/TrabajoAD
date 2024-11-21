@@ -74,7 +74,7 @@ public void eliminarProveedor(int id) throws SQLException {
 }
 
 public void crearUsuario(String nombre, String email, int anho_nacimiento) throws SQLException {
-        String sentenciaSQL="Insertr into usuarios (nombre, email, ano_nacimiento) values (?, ?, ?)";
+        String sentenciaSQL="Insert into usuarios (nombre, email, ano_nacimiento) values (?, ?, ?)";
         PreparedStatement preparedStatement;
         try {
             preparedStatement=mySQL.prepareStatement(sentenciaSQL);

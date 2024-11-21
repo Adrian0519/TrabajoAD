@@ -3,21 +3,21 @@ create database proyecto;
 use proyecto;
 
 create table productos(
-id_producto int primary key,
+id_producto int auto_increment key,
 nombre_producto varchar(100) not null,
 precio int not null,
 stock int not null
 );
 
 create table usuarios(
-id_usuario int primary key,
-nombre varchar(100) not null,
+id_usuario int auto_increment primary key,
+nombre varchar (100) not null,
 email varchar(100) not null,
 ano_nacimiento int not null
 );
 
 create table pedidos(
-id_pedido int primary key,
+id_pedido int auto_increment primary key,
 id_usuario int not null,
 fecha_pedido date not null,
 foreign key(id_usuario) references usuarios (id_usuario) on update cascade

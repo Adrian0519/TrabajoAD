@@ -82,6 +82,7 @@ public class Main {
                     System.out.println("Inserta el id del usuario a eliminar");
                     int idEliminar=scanner.nextInt();
                     scanner.nextLine();
+                    metodos.eliminarUsuario(idEliminar);
                     break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");

@@ -91,5 +91,32 @@ public void crearUsuario(String nombre, String email, int anho_nacimiento) throw
             System.out.println(e.toString());
         }
 }
+    void eliminarUsuario(int id) throws SQLException {
+        String sentenciaPedidosProdu="Delete from pedidos_productos where id_pedido in (select id_pedido from pedidos where id_usuario = ?)";
+        String sentenciaPedidos="Delete from pedidos where id_usuario = ?";
+        String sentenciaPUsuario="Delete from usuarios where id_usuario = ?";
+        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement2;
+        PreparedStatement preparedStatement3;
+        try {
+            preparedStatement= mySQL.prepareStatement(sentenciaPedidosProdu);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+            preparedStatement2= mySQL.prepareStatement(sentenciaPedidos);
+            preparedStatement2.setInt(1,id);
+            preparedStatement3= mySQL.prepareStatement(sentenciaPUsuario);
+            preparedStatement3.setInt(1,id);
+            int comproEliminacion=preparedStatement3.executeUpdate();
+            if (comproEliminacion>0){
+                System.out.println("Usuario eliminado de forma exitosa");
+            }else {
+                System.out.println("No hay usuarios con dicho id");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

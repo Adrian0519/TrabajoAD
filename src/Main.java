@@ -84,6 +84,22 @@ public class Main {
                     scanner.nextLine();
                     metodos.eliminarUsuario(idEliminar);
                     break;
+                case 6:
+                    System.out.println("Inserta el nombre del producto a crear");
+                    String productoCrear= scanner.next();
+                    scanner.nextLine();
+                    System.out.println("Insertame su precio");
+                    double precio= scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("Dime el stock");
+                    int stock= scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ahora quiero el nombre del proveedor");
+                    String proveedor=scanner.next();
+                    scanner.nextLine();
+                    System.out.println("Puedes darme el nif del proveedor");
+                    String nifProe= scanner.next();
+
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

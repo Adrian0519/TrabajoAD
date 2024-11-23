@@ -91,7 +91,7 @@ public void crearUsuario(String nombre, String email, int anho_nacimiento) throw
             System.out.println(e.toString());
         }
 }
-    void eliminarUsuario(int id) throws SQLException {
+   public void eliminarUsuario(int id) throws SQLException {
         String sentenciaPedidosProdu="Delete from pedidos_productos where id_pedido in (select id_pedido from pedidos where id_usuario = ?)";
         String sentenciaPedidos="Delete from pedidos where id_usuario = ?";
         String sentenciaPUsuario="Delete from usuarios where id_usuario = ?";
@@ -116,6 +116,41 @@ public void crearUsuario(String nombre, String email, int anho_nacimiento) throw
             e.printStackTrace();
         }
     }
+
+    public void crearProducto(String nombre, Double precio, int stock, String nombre_categoria, String nif){
+        String obtenerCategoriaSQL = "SELECT id_categoria FROM categorias WHERE nombre_categoria = ?";
+        String obtenerProveedorSQL = "SELECT id_proveedor FROM proveedores WHERE nif = ?";
+        String insertarProductoSQL = "INSERT INTO productos (id_producto, nombre_producto, precio, stock, id_categoria, id_proveedor) VALUES (?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement preparedStatementCategoria;
+        PreparedStatement preparedStatementProveedor;
+        PreparedStatement insertarProductoInsertar;
+
+        try {
+            preparedStatementCategoria= mySQL.prepareStatement(obtenerCategoriaSQL);
+            preparedStatementCategoria.setString(1,nombre_categoria);
+            ResultSet resultSet= preparedStatementCategoria.executeQuery();
+            int idCategoria=0;
+            if (resultSet.next()){
+                idCategoria=resultSet.getInt("id_categoria");
+            }else {
+                System.out.println("Categoria no encontrada en mysql");
+            }
+
+            preparedStatementProveedor=posSQL.prepareStatement(obtenerProveedorSQL);
+            preparedStatementProveedor.setString(1,nif);
+            ResultSet resultSet2=preparedStatementProveedor.executeQuery();
+            int idProveedor=0;
+            if (resultSet2.next()){
+                idProveedor=resultSet2.getInt("id_proveedor");
+            }else {
+                System.out.println("Proveedor no encontrado");
+            }
+        }catch (SQLException e){
+            System.out.println(e.toString());
+        }
+    }
+
 
 
 

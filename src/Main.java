@@ -99,7 +99,8 @@ public class Main {
                     scanner.nextLine();
                     System.out.println("Puedes darme el nif del proveedor");
                     String nifProe= scanner.next();
-
+                    metodos.crearProducto(productoCrear,precio,stock,proveedor,nifProe);
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

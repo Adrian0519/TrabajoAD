@@ -177,7 +177,6 @@ public class Metodos {
             System.out.println(b.toString());
             return;
         }
-
         try {
                 preparedStatementinsertarProductosPG = posSQL.prepareStatement(insertarProductosPG);
                 preparedStatementinsertarProductosPG.setInt(1, idProductoAlmacenada);
@@ -192,6 +191,84 @@ public class Metodos {
             } catch (SQLException x) {
                 System.out.println(x.toString());
             }
+        }
+        public void eliminarProductoPorNombre(String nombre) throws SQLException {
+        String obtencionID="select id_producto from productos where nombre_producto = ?";
+        String sentenciaAlmacenes="delete from almacenes_productos where id_producto = ?";
+        String sentenciaProductopos="delete from productos where id_producto = ?";
+        String senciapedidosSQL="delete from pedidos_productos where id_producto = ?";
+        String senciaProductoSQL="delete from productos where id_producto = ?";
+        int claveBorrado=0;
+        PreparedStatement preparedStatementID;
+        PreparedStatement preparedStatementProductosSQL;
+        PreparedStatement preparedStatementPedidosSQL;
+        PreparedStatement preparedStatementAlmacenes;
+        PreparedStatement preparedStatementProductos;
+        try {
+            preparedStatementID=mySQL.prepareStatement(obtencionID);
+            preparedStatementID.setString(1,nombre);
+            ResultSet resultSet1= preparedStatementID.executeQuery();
+            if (resultSet1.next()){
+                claveBorrado=resultSet1.getInt(1);
+            }else {
+                System.out.println("No hay ningun producto con dicho nombre");
+                return;
+            }
+        }catch (SQLException e){
+            System.out.println(e.toString());
+        }
+        try {
+            preparedStatementAlmacenes=posSQL.prepareStatement(sentenciaAlmacenes);
+            preparedStatementAlmacenes.setInt(1,claveBorrado);
+            int borradoConfirmado1=preparedStatementAlmacenes.executeUpdate();
+            if (borradoConfirmado1>0){
+                System.out.println("Se elimino almacenes_productos relacionado al producto");
+            }else {
+                System.out.println("Un error con almacenes_productos no permite borrar");
+                return;
+            }
+        }catch (SQLException a){
+            System.out.println(a.toString());
+        }
+        try {
+            preparedStatementProductos = posSQL.prepareStatement(sentenciaProductopos);
+            preparedStatementProductos.setInt(1, claveBorrado);
+            int borradoConfirmado2 = preparedStatementProductos.executeUpdate();
+            if (borradoConfirmado2 > 0) {
+                System.out.println("Borrado en productos PG");
+            } else {
+                System.out.println("Error en el borrado de PG");
+                return;
+            }
+        }catch (SQLException b){
+            System.out.println(b.toString());
+            try {
+                preparedStatementPedidosSQL=mySQL.prepareStatement(senciapedidosSQL);
+                preparedStatementPedidosSQL.setInt(1,claveBorrado);
+                int borradoConfirmado3= preparedStatementPedidosSQL.executeUpdate();
+                if (borradoConfirmado3>0){
+                    System.out.println("Borrado los pedidos");
+                }else {
+                    System.out.println("Error en el borrado de los pedidos");
+                    return;
+                }
+            }catch (SQLException c){
+                System.out.println(c.toString());
+            }
+            try {
+                preparedStatementProductosSQL= mySQL.prepareStatement(senciaProductoSQL);
+                preparedStatementProductosSQL.setInt(1,claveBorrado);
+                int borradoConfirmado4=preparedStatementProductosSQL.executeUpdate();
+                if (borradoConfirmado4>0){
+                    System.out.println("Exito , producto borrado");
+                }else {
+                    System.out.println("Error en el borrado de producto en mysql");
+                }
+            }catch (SQLException d){
+                System.out.println(d.toString());
+            }
+        }
+
 
         }
     }

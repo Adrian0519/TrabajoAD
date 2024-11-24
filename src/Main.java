@@ -99,6 +99,11 @@ public class Main {
                     String nifProe= scanner.nextLine();
                     metodos.crearProducto(productoCrear,precio,stock,categoria,nifProe);
                     break;
+                case 7:
+                    System.out.println("Inserta el producto que deseas eliminar");
+                    String productoEliminar=scanner.nextLine();
+                    metodos.eliminarProductoPorNombre(productoEliminar);
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

@@ -136,46 +136,61 @@ public class Metodos {
             if (resultSet.next()) {
                 idCategoria = resultSet.getInt("id_categoria");
             } else {
-                System.out.println("Categoria no encontrada en Pg");
+                System.out.println("No hay ninguna id con  " +nombre_categoria + " en categorias");
+                return;
             }
-
-
-                preparedStatementProveedor = posSQL.prepareStatement(obtenerProveedorPG);
-                preparedStatementProveedor.setString(1, nif);
-                ResultSet resultSet2 = preparedStatementProveedor.executeQuery();
+        }catch (SQLException e) {
+            System.out.println(e.toString());
+            return;
+        }
+        try {
+            preparedStatementProveedor = posSQL.prepareStatement(obtenerProveedorPG);
+            preparedStatementProveedor.setString(1, nif);
+            ResultSet resultSet1 = preparedStatementProveedor.executeQuery();
+            if (resultSet1.next()) {
+                idProveedor = resultSet1.getInt("id_proveedor");
+            } else {
+                System.out.println("Error no hay proveedor con dicho id " + nif + " en la base de datos");
+                return;
+            }
+        }catch (SQLException a) {
+            System.out.println(a.toString());
+            return;
+        }
+        try {
+            preparedStatementinsertarProducto = mySQL.prepareStatement(insertarProductoSQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatementinsertarProducto.setString(1, nombre);
+            preparedStatementinsertarProducto.setDouble(2, precio);
+            preparedStatementinsertarProducto.setInt(3, stock);
+            int Comprobacion = preparedStatementinsertarProducto.executeUpdate();
+            if (Comprobacion > 0) {
+                ResultSet resultSet2 = preparedStatementinsertarProducto.getGeneratedKeys();
                 if (resultSet2.next()) {
-                    idProveedor = resultSet2.getInt("id_proveedor");
-                } else {
-                    System.out.println("Proveedor no encontrado");
+                    idProductoAlmacenada = resultSet2.getInt(1);
+                    System.out.println("Se inserto en mySQL");
                 }
+            }else {
+                System.out.println("Error en mysql");
+                return;
+            }
+        }catch (SQLException b) {
+            System.out.println(b.toString());
+            return;
+        }
 
-                preparedStatementinsertarProducto = mySQL.prepareStatement(insertarProductoSQL, Statement.RETURN_GENERATED_KEYS);
-                preparedStatementinsertarProducto.setString(1, nombre);
-                preparedStatementinsertarProducto.setDouble(2, precio);
-                preparedStatementinsertarProducto.setInt(3, stock);
-                int Comprobacion = preparedStatementinsertarProducto.executeUpdate();
-                if (Comprobacion > 0) {
-                    ResultSet resultSet1 = preparedStatementinsertarProducto.getGeneratedKeys();
-                    System.out.println("Se inserto correctamente en mySQL");
-                    if (resultSet1.next()) {
-                        idProductoAlmacenada = resultSet1.getInt(1);
-                    }
-                } else {
-                    System.out.println("Error en la insercion de mySQL");
-                }
-
+        try {
                 preparedStatementinsertarProductosPG = posSQL.prepareStatement(insertarProductosPG);
                 preparedStatementinsertarProductosPG.setInt(1, idProductoAlmacenada);
                 preparedStatementinsertarProductosPG.setInt(2, idProveedor);
                 preparedStatementinsertarProductosPG.setInt(3, idCategoria);
                 int comprobacionPG = preparedStatementinsertarProductosPG.executeUpdate();
                 if (comprobacionPG > 0) {
-                    System.out.println("Se inserto correctamente en el pg");
+                    System.out.println("Se inserto correctamente en el PG ");
                 } else {
-                    System.out.println("Error en la insercion de pg");
+                    System.out.println("Se inserto en mysql pero no en PG ");
                 }
-            } catch (SQLException a) {
-                System.out.println(a.toString());
+            } catch (SQLException x) {
+                System.out.println(x.toString());
             }
 
         }

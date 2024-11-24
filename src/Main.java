@@ -86,8 +86,7 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Inserta el nombre del producto a crear");
-                    String productoCrear= scanner.next();
-                    scanner.nextLine();
+                    String productoCrear= scanner.nextLine();
                     System.out.println("Insertame su precio");
                     double precio= scanner.nextDouble();
                     scanner.nextLine();
@@ -95,10 +94,9 @@ public class Main {
                     int stock= scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("Ahora quiero el nombre del proveedor");
-                    String proveedor=scanner.next();
-                    scanner.nextLine();
+                    String proveedor=scanner.nextLine();
                     System.out.println("Puedes darme el nif del proveedor");
-                    String nifProe= scanner.next();
+                    String nifProe= scanner.nextLine();
                     metodos.crearProducto(productoCrear,precio,stock,proveedor,nifProe);
                     break;
                 case 0:

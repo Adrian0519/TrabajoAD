@@ -93,11 +93,11 @@ public class Main {
                     System.out.println("Dime el stock");
                     int stock= scanner.nextInt();
                     scanner.nextLine();
-                    System.out.println("Ahora quiero el nombre del proveedor");
-                    String proveedor=scanner.nextLine();
+                    System.out.println("Ahora quiero el nombre del categoria");
+                    String categoria=scanner.nextLine();
                     System.out.println("Puedes darme el nif del proveedor");
                     String nifProe= scanner.nextLine();
-                    metodos.crearProducto(productoCrear,precio,stock,proveedor,nifProe);
+                    metodos.crearProducto(productoCrear,precio,stock,categoria,nifProe);
                     break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");

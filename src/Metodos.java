@@ -192,7 +192,7 @@ public class Metodos {
                 System.out.println(x.toString());
             }
         }
-        //TODO revisar los problemas.
+        //TODO :revisar los problemas (Ahora resulta que borra todo menos mesa WHY NO ? ).
         public void eliminarProductoPorNombre(String nombre) throws SQLException {
         String obtencionID="select id_producto from productos where nombre_producto = ?";
         String sentenciaAlmacenes="delete from almacenes_productos where id_producto = ?";

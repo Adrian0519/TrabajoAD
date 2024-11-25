@@ -116,7 +116,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-
+//TODO revisar en pg
     public void crearProducto(String nombre, Double precio, int stock, String nombre_categoria, String nif) {
         String obtenerCategoriaPG = "select id_categoria from categorias where nombre_categoria = ?";
         String obtenerProveedorPG = "select id_proveedor from proveedores where (contacto).nif = ?";
@@ -192,6 +192,7 @@ public class Metodos {
                 System.out.println(x.toString());
             }
         }
+        //TODO revisar los problemas.
         public void eliminarProductoPorNombre(String nombre) throws SQLException {
         String obtencionID="select id_producto from productos where nombre_producto = ?";
         String sentenciaAlmacenes="delete from almacenes_productos where id_producto = ?";
@@ -205,32 +206,24 @@ public class Metodos {
         PreparedStatement preparedStatementAlmacenes;
         PreparedStatement preparedStatementProductos;
         try {
-            preparedStatementID=mySQL.prepareStatement(obtencionID);
-            preparedStatementID.setString(1,nombre);
-            ResultSet resultSet1= preparedStatementID.executeQuery();
-            if (resultSet1.next()){
-                claveBorrado=resultSet1.getInt(1);
-            }else {
+            preparedStatementID = mySQL.prepareStatement(obtencionID);
+            preparedStatementID.setString(1, nombre);
+            ResultSet resultSet1 = preparedStatementID.executeQuery();
+            if (resultSet1.next()) {
+                claveBorrado = resultSet1.getInt(1);
+            } else {
                 System.out.println("No hay ningun producto con dicho nombre");
                 return;
             }
-        }catch (SQLException e){
-            System.out.println(e.toString());
-        }
-        try {
-            preparedStatementAlmacenes=posSQL.prepareStatement(sentenciaAlmacenes);
-            preparedStatementAlmacenes.setInt(1,claveBorrado);
-            int borradoConfirmado1=preparedStatementAlmacenes.executeUpdate();
-            if (borradoConfirmado1>0){
+            preparedStatementAlmacenes = posSQL.prepareStatement(sentenciaAlmacenes);
+            preparedStatementAlmacenes.setInt(1, claveBorrado);
+            int borradoConfirmado1 = preparedStatementAlmacenes.executeUpdate();
+            if (borradoConfirmado1 > 0) {
                 System.out.println("Se elimino almacenes_productos relacionado al producto");
-            }else {
+            } else {
                 System.out.println("Un error con almacenes_productos no permite borrar");
                 return;
             }
-        }catch (SQLException a){
-            System.out.println(a.toString());
-        }
-        try {
             preparedStatementProductos = posSQL.prepareStatement(sentenciaProductopos);
             preparedStatementProductos.setInt(1, claveBorrado);
             int borradoConfirmado2 = preparedStatementProductos.executeUpdate();
@@ -240,38 +233,48 @@ public class Metodos {
                 System.out.println("Error en el borrado de PG");
                 return;
             }
-        }catch (SQLException b){
-            System.out.println(b.toString());
-            try {
-                preparedStatementPedidosSQL=mySQL.prepareStatement(senciapedidosSQL);
-                preparedStatementPedidosSQL.setInt(1,claveBorrado);
-                int borradoConfirmado3= preparedStatementPedidosSQL.executeUpdate();
-                if (borradoConfirmado3>0){
-                    System.out.println("Borrado los pedidos");
-                }else {
-                    System.out.println("Error en el borrado de los pedidos");
-                    return;
-                }
-            }catch (SQLException c){
-                System.out.println(c.toString());
+            preparedStatementPedidosSQL = mySQL.prepareStatement(senciapedidosSQL);
+            preparedStatementPedidosSQL.setInt(1, claveBorrado);
+            int borradoConfirmado3 = preparedStatementPedidosSQL.executeUpdate();
+            if (borradoConfirmado3 > 0) {
+                System.out.println("Borrado los pedidos");
+            } else {
+                System.out.println("Error en el borrado de los pedidos");
+                return;
             }
-            try {
-                preparedStatementProductosSQL= mySQL.prepareStatement(senciaProductoSQL);
-                preparedStatementProductosSQL.setInt(1,claveBorrado);
-                int borradoConfirmado4=preparedStatementProductosSQL.executeUpdate();
-                if (borradoConfirmado4>0){
+                preparedStatementProductosSQL = mySQL.prepareStatement(senciaProductoSQL);
+                preparedStatementProductosSQL.setInt(1, claveBorrado);
+                int borradoConfirmado4 = preparedStatementProductosSQL.executeUpdate();
+                if (borradoConfirmado4 > 0) {
                     System.out.println("Exito , producto borrado");
-                }else {
+                } else {
                     System.out.println("Error en el borrado de producto en mysql");
                 }
-            }catch (SQLException d){
+            } catch (SQLException d) {
                 System.out.println(d.toString());
             }
         }
 
+public void listarProductosBajoStock(int stock) throws SQLException {
+        String sentenciQuery="select nombre_producto from productos where stock < ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=mySQL.prepareStatement(sentenciQuery);
+            preparedStatement.setInt(1,stock);
+            ResultSet resultSet= preparedStatement.executeQuery();
+            if (resultSet.next()){
+                while (resultSet.next()){
+                    System.out.println(resultSet.getString(1));
+                }
+            }else {
+                System.out.println("Felicidades, no hay productos con un stock por debajo del indicado");
+            }
+        }catch (SQLException a){
+            System.out.println(a.toString());
+        }
+}
 
         }
-    }
 
 
 

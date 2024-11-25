@@ -104,6 +104,12 @@ public class Main {
                     String productoEliminar=scanner.nextLine();
                     metodos.eliminarProductoPorNombre(productoEliminar);
                     break;
+                case 8:
+                    System.out.println("Dime el stock y t mostraremos con los productos con menos de dicho stock");
+                    int stockMenor= scanner.nextInt();
+                    scanner.nextLine();
+                    metodos.listarProductosBajoStock(stockMenor);
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

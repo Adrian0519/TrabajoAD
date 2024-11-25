@@ -116,7 +116,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-//TODO revisar en pg
+
     public void crearProducto(String nombre, Double precio, int stock, String nombre_categoria, String nif) {
         String obtenerCategoriaPG = "select id_categoria from categorias where nombre_categoria = ?";
         String obtenerProveedorPG = "select id_proveedor from proveedores where (contacto).nif = ?";
@@ -213,25 +213,6 @@ public class Metodos {
                 claveBorrado = resultSet1.getInt(1);
             } else {
                 System.out.println("No hay ningun producto con dicho nombre");
-                return;
-            }
-            preparedStatementAlmacenes = posSQL.prepareStatement(sentenciaAlmacenes);
-            preparedStatementAlmacenes.setInt(1, claveBorrado);
-            int borradoConfirmado1 = preparedStatementAlmacenes.executeUpdate();
-            if (borradoConfirmado1 > 0) {
-                System.out.println("Se elimino almacenes_productos relacionado al producto");
-            } else {
-                System.out.println("Un error con almacenes_productos no permite borrar");
-                return;
-            }
-            preparedStatementProductos = posSQL.prepareStatement(sentenciaProductopos);
-            preparedStatementProductos.setInt(1, claveBorrado);
-            int borradoConfirmado2 = preparedStatementProductos.executeUpdate();
-            if (borradoConfirmado2 > 0) {
-                System.out.println("Borrado en productos PG");
-            } else {
-                System.out.println("Error en el borrado de PG");
-                return;
             }
             preparedStatementPedidosSQL = mySQL.prepareStatement(senciapedidosSQL);
             preparedStatementPedidosSQL.setInt(1, claveBorrado);
@@ -240,7 +221,6 @@ public class Metodos {
                 System.out.println("Borrado los pedidos");
             } else {
                 System.out.println("Error en el borrado de los pedidos");
-                return;
             }
                 preparedStatementProductosSQL = mySQL.prepareStatement(senciaProductoSQL);
                 preparedStatementProductosSQL.setInt(1, claveBorrado);
@@ -250,6 +230,22 @@ public class Metodos {
                 } else {
                     System.out.println("Error en el borrado de producto en mysql");
                 }
+            preparedStatementAlmacenes = posSQL.prepareStatement(sentenciaAlmacenes);
+            preparedStatementAlmacenes.setInt(1, claveBorrado);
+            int borradoConfirmado1 = preparedStatementAlmacenes.executeUpdate();
+            if (borradoConfirmado1 > 0) {
+                System.out.println("Se elimino almacenes_productos relacionado al producto");
+            } else {
+                System.out.println("Un error con almacenes_productos no permite borrar");
+            }
+            preparedStatementProductos = posSQL.prepareStatement(sentenciaProductopos);
+            preparedStatementProductos.setInt(1, claveBorrado);
+            int borradoConfirmado2 = preparedStatementProductos.executeUpdate();
+            if (borradoConfirmado2 > 0) {
+                System.out.println("Borrado en productos PG");
+            } else {
+                System.out.println("Error en el borrado de PG");
+            }
             } catch (SQLException d) {
                 System.out.println(d.toString());
             }

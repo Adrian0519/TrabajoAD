@@ -113,6 +113,9 @@ public class Main {
                 case 9:
                     metodos.obtenerTotalPedidosUsuarios();
                     break;
+                case 10:
+                    metodos.obtenerCantidadProductosEnCadaAlmacen();
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

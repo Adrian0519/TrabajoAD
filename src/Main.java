@@ -110,6 +110,9 @@ public class Main {
                     scanner.nextLine();
                     metodos.listarProductosBajoStock(stockMenor);
                     break;
+                case 9:
+                    metodos.obtenerTotalPedidosUsuarios();
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

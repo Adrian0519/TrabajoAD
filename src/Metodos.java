@@ -274,6 +274,31 @@ public void listarProductosBajoStock(int stock) throws SQLException {
         }
 }
 
+public void obtenerTotalPedidosUsuarios() throws SQLException {
+        String sentencia1="select id_usuario from usuarios";
+        String sentencia2="select id_pedido from pedidos where id_usuario = ?";
+        PreparedStatement preparedStatement1;
+        PreparedStatement preparedStatement2;
+        int contador=0;
+        try {
+            preparedStatement1=mySQL.prepareStatement(sentencia1);
+            ResultSet resultSet=preparedStatement1.executeQuery();
+            while (resultSet.next()){
+                int id=resultSet.getInt(1);
+            preparedStatement2= mySQL.prepareStatement(sentencia2);
+            preparedStatement2.setInt(1,id);
+            ResultSet resultSet2=preparedStatement2.executeQuery();
+            while (resultSet2.next()){
+               contador=contador+1;
+            }
+                System.out.println("El usuario con id "+id+ " realizo los siguientes pedidos " + contador);
+            contador=0;
+            }
+        }catch (SQLException a){
+            System.out.println(a.toString());
+        }
+}
+
         }
 
 

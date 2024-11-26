@@ -24,12 +24,12 @@ foreign key(id_usuario) references usuarios (id_usuario) on update cascade
 );
 
 create table pedidos_productos(
-id_pedido int ,
-id_producto int ,
+id_pedido int,
+id_producto int,
 cantidad int not null,
 primary key(id_pedido,id_producto),
 foreign key (id_producto) references productos (id_producto) on update cascade,
-foreign key (id_pedido) references productos (id_producto) on update cascade
+foreign key (id_pedido) references pedidos (id_pedido) on update cascade
 );
 
 INSERT INTO productos VALUES ('1','Puerta','100',23);
@@ -44,4 +44,3 @@ INSERT INTO pedidos VALUES ('3','3','2023-8-9');
 INSERT INTO pedidos_productos VALUES ('1','1','3');
 INSERT INTO pedidos_productos VALUES ('2','3','9');
 INSERT INTO pedidos_productos VALUES ('3','1','4');
-

@@ -254,17 +254,19 @@ public class Metodos {
 public void listarProductosBajoStock(int stock) throws SQLException {
         String sentenciQuery="select nombre_producto from productos where stock < ?";
         PreparedStatement preparedStatement;
+        int contador=0;
         try {
             preparedStatement=mySQL.prepareStatement(sentenciQuery);
             preparedStatement.setInt(1,stock);
             ResultSet resultSet= preparedStatement.executeQuery();
-            if (resultSet.next()){
-                while (resultSet.next()){
+            while (resultSet.next()){
                     System.out.println(resultSet.getString(1));
+                    contador++;
                 }
-            }else {
-                System.out.println("Felicidades, no hay productos con un stock por debajo del indicado");
+            if (contador==0){
+                System.out.println("No hay ningun producto con stock inferior al mencionado");
             }
+
         }catch (SQLException a){
             System.out.println(a.toString());
         }
@@ -391,6 +393,7 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
         PreparedStatement preparedStatement3;
         PreparedStatement preparedStatement4;
         int id1,id2,id3;
+        String nombre;
         try {
             preparedStatement1= posSQL.prepareStatement(sentenciaIDProducto);
             preparedStatement1.setInt(1,idCategoria);
@@ -403,14 +406,22 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
                 while (resultSet2.next()){
                     id2=resultSet2.getInt(1);
                     preparedStatement3= mySQL.prepareStatement(sentenciaIDUusario);
+                    preparedStatement3.setInt(1,id2);
                     ResultSet resultSet3=preparedStatement3.executeQuery();
                     while (resultSet3.next()){
                         id3=resultSet3.getInt(1);
                         preparedStatement4= mySQL.prepareStatement(sentenciaUsuario);
                         preparedStatement4.setInt(1,id3);
+                        ResultSet resultSet4=preparedStatement4.executeQuery();
+                        while (resultSet4.next()){
+                            nombre=resultSet4.getString(1);
+                            System.out.println(nombre);
+                        }
                     }
                 }
             }
+        }catch (SQLException a){
+            System.out.println(a.toString());
         }
     }
         }

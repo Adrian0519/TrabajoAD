@@ -377,9 +377,40 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
                   }
                 }
             }
-
         }catch (SQLException a){
             System.out.println(a.toString());
+        }
+    }
+    public void obtenerUsuariosCompraronProductosCategoria(int idCategoria) throws SQLException {
+        String sentenciaIDProducto="select id_producto from productos where id_categoria = ?";
+        String sentenciaIDPedidos="select id_pedido from pedidos_productos where id_producto = ?";
+        String sentenciaIDUusario="select id_usuario from pedidos where id_pedido = ?";
+        String sentenciaUsuario="select nombre from usuarios where id_usuario = ?";
+        PreparedStatement preparedStatement1;
+        PreparedStatement preparedStatement2;
+        PreparedStatement preparedStatement3;
+        PreparedStatement preparedStatement4;
+        int id1,id2,id3;
+        try {
+            preparedStatement1= posSQL.prepareStatement(sentenciaIDProducto);
+            preparedStatement1.setInt(1,idCategoria);
+            ResultSet resultSet1=preparedStatement1.executeQuery();
+            while (resultSet1.next()){
+                id1=resultSet1.getInt(1);
+                preparedStatement2= mySQL.prepareStatement(sentenciaIDPedidos);
+                preparedStatement2.setInt(1,id1);
+                ResultSet resultSet2=preparedStatement2.executeQuery();
+                while (resultSet2.next()){
+                    id2=resultSet2.getInt(1);
+                    preparedStatement3= mySQL.prepareStatement(sentenciaIDUusario);
+                    ResultSet resultSet3=preparedStatement3.executeQuery();
+                    while (resultSet3.next()){
+                        id3=resultSet3.getInt(1);
+                        preparedStatement4= mySQL.prepareStatement(sentenciaUsuario);
+                        preparedStatement4.setInt(1,id3);
+                    }
+                }
+            }
         }
     }
         }

@@ -119,6 +119,11 @@ public class Main {
                 case 11:
                     metodos.listarTodosProductosConCategoriaYProveedor();
                     break;
+                case 12:
+                    System.out.println("Dame el id de la categoria");
+                    int idCategoria=scanner.nextInt();
+                    scanner.nextLine();
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

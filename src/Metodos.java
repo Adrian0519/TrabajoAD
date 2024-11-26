@@ -323,7 +323,64 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
         }catch (SQLException a){
             System.out.println(a.toString());
         }
+    }
 
+    public void listarTodosProductosConCategoriaYProveedor() throws SQLException {
+        String sentenciPG="select id_producto, id_proveedor, id_categoria from productos";
+        String sentenciaCategoria="select nombre_categoria from categorias where id_categoria = ?";
+        String sentenciaProveedores="select nombre_proveedor, (contacto).nombre_contacto, (contacto).nif, (contacto).telefono, (contacto).email  from proveedores  where id_proveedor = ? ";
+        String sentenciaProducto="select * from productos where id_producto = ?";
+        PreparedStatement preparedStatement1;
+        PreparedStatement preparedStatement2;
+        PreparedStatement preparedStatement3;
+        PreparedStatement preparedStatement4;
+        int idProducto=0;
+        int idProveedor=0;
+        int idCategoria=0;
+        String nombreProvedor, nombreContacto, nif, mail, nombreCategoria , nombreProducto;
+        int telefono, stock , id ;
+        double precio;
+        try {
+            preparedStatement1= posSQL.prepareStatement(sentenciPG);
+            ResultSet resultSet1= preparedStatement1.executeQuery();
+            while (resultSet1.next()){
+                idProducto=resultSet1.getInt(1);
+                idProveedor= resultSet1.getInt(2);
+                idCategoria=resultSet1.getInt(3);
+                preparedStatement2=posSQL.prepareStatement(sentenciaProveedores);
+                preparedStatement2.setInt(1,idProveedor);
+                ResultSet resultSet2=preparedStatement2.executeQuery();
+                while (resultSet2.next()){
+                  nombreProvedor=resultSet2.getString(1);
+                  nombreContacto=resultSet2.getString(2);
+                  nif=resultSet2.getString(3);
+                  telefono=resultSet2.getInt(4);
+                  mail=resultSet2.getString(5);
+                    System.out.println("-----------------Datos----del-----Producto------------");
+                    System.out.println("Nombre proveedor " + nombreProvedor + " nombre contacto " + nombreContacto + " nif " + nif + " telefono " + telefono +" mail " +mail);
+                  preparedStatement3=posSQL.prepareStatement(sentenciaCategoria);
+                  preparedStatement3.setInt(1,idCategoria);
+                  ResultSet resultSet3=preparedStatement3.executeQuery();
+                  while (resultSet3.next()){
+                      nombreCategoria=resultSet3.getString(1);
+                      System.out.println("Categoria " + nombreCategoria );
+                      preparedStatement4=mySQL.prepareStatement(sentenciaProducto);
+                      preparedStatement4.setInt(1,idProducto);
+                      ResultSet resultSet4= preparedStatement4.executeQuery();
+                      while (resultSet4.next()){
+                          id=resultSet4.getInt(1);
+                          nombreProducto=resultSet4.getString(2);
+                          precio=resultSet4.getDouble(3);
+                          stock=resultSet4.getInt(4);
+                          System.out.println("Nombre producto " + nombreProducto + " precio " + precio + " stock " + stock);
+                      }
+                  }
+                }
+            }
+
+        }catch (SQLException a){
+            System.out.println(a.toString());
+        }
     }
         }
 

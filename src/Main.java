@@ -116,6 +116,9 @@ public class Main {
                 case 10:
                     metodos.obtenerCantidadProductosEnCadaAlmacen();
                     break;
+                case 11:
+                    metodos.listarTodosProductosConCategoriaYProveedor();
+                    break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;

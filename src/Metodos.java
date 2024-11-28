@@ -192,7 +192,7 @@ public class Metodos {
                 System.out.println(x.toString());
             }
         }
-        //Todo parchear los mensajes de error (Tocar los mensajes de error).
+       
 
         public void eliminarProductoPorNombre(String nombre) throws SQLException {
         String obtencionID="select id_producto from productos where nombre_producto = ?";

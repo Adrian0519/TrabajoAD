@@ -9,6 +9,7 @@ public class Main {
         Scanner scanner=new Scanner(System.in);
         int eleccion=99;
         while (eleccion!=0){
+            System.out.println("------------------------");
             System.out.println("Menu de acciones ");
             System.out.println("------------------------");
             System.out.println("1.-Crear una nueva categoría");
@@ -61,7 +62,7 @@ public class Main {
                     metodos.crearNuevoProveedor(nombre,nif,tlf,mail);
                     break;
                 case 3:
-                    System.out.println("Dime el nombre del provedor");
+                    System.out.println("Dime el id del provedor");
                     int id= scanner.nextInt();
                     scanner.nextLine();
                     metodos.eliminarProveedor(id);
@@ -82,6 +83,48 @@ public class Main {
                     System.out.println("Inserta el id del usuario a eliminar");
                     int idEliminar=scanner.nextInt();
                     scanner.nextLine();
+                    metodos.eliminarUsuario(idEliminar);
+                    break;
+                case 6:
+                    System.out.println("Inserta el nombre del producto a crear");
+                    String productoCrear= scanner.nextLine();
+                    System.out.println("Insertame su precio");
+                    double precio= scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("Dime el stock");
+                    int stock= scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Ahora quiero el nombre del categoria");
+                    String categoria=scanner.nextLine();
+                    System.out.println("Puedes darme el nif del proveedor");
+                    String nifProe= scanner.nextLine();
+                    metodos.crearProducto(productoCrear,precio,stock,categoria,nifProe);
+                    break;
+                case 7:
+                    System.out.println("Inserta el producto que deseas eliminar");
+                    String productoEliminar=scanner.nextLine();
+                    metodos.eliminarProductoPorNombre(productoEliminar);
+                    break;
+                case 8:
+                    System.out.println("Dime el stock y t mostraremos con los productos con menos de dicho stock");
+                    int stockMenor= scanner.nextInt();
+                    scanner.nextLine();
+                    metodos.listarProductosBajoStock(stockMenor);
+                    break;
+                case 9:
+                    metodos.obtenerTotalPedidosUsuarios();
+                    break;
+                case 10:
+                    metodos.obtenerCantidadProductosEnCadaAlmacen();
+                    break;
+                case 11:
+                    metodos.listarTodosProductosConCategoriaYProveedor();
+                    break;
+                case 12:
+                    System.out.println("Dame el id de la categoria");
+                    int idCategoria=scanner.nextInt();
+                    scanner.nextLine();
+                    metodos.obtenerUsuariosCompraronProductosCategoria(idCategoria);
                     break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");

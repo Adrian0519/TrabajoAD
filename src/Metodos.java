@@ -192,7 +192,7 @@ public class Metodos {
                 System.out.println(x.toString());
             }
         }
-        //TODO :revisar los problemas (Ahora resulta que borra todo menos mesa WHY NO ? ).
+
         public void eliminarProductoPorNombre(String nombre) throws SQLException {
         String obtencionID="select id_producto from productos where nombre_producto = ?";
         String sentenciaAlmacenes="delete from almacenes_productos where id_producto = ?";
@@ -300,27 +300,18 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
 }
 
     public void obtenerCantidadProductosEnCadaAlmacen() throws SQLException {
-        String sentencia1="select id_almacen, nombre_almacen from almacenes";
-        String sentencia2="select cantidad from almacenes_productos where id_almacen= ?";
+        String sentencia1 = "SELECT DISTINCT a.id_almacen, a.nombre_almacen, ap.cantidad " +
+                "FROM almacenes a " +
+                "LEFT JOIN almacenes_productos ap ON a.id_almacen = ap.id_almacen";
         PreparedStatement preparedStatement1;
-        PreparedStatement preparedStatement2;
-        int cantidad=0;
-        int cantidadTotal=0;
         try {
             preparedStatement1=posSQL.prepareStatement(sentencia1);
             ResultSet resultSet=preparedStatement1.executeQuery();
             while (resultSet.next()){
                 int id=resultSet.getInt(1);
                 String nombreAlmacen=resultSet.getString(2);
-                preparedStatement2= posSQL.prepareStatement(sentencia2);
-                preparedStatement2.setInt(1,id);
-                ResultSet resultSet2=preparedStatement2.executeQuery();
-                while (resultSet2.next()){
-                cantidad=resultSet2.getInt(1);
-                cantidadTotal=cantidadTotal+cantidad;
-                }
-                System.out.println("El almacen " + nombreAlmacen + " con id " + id + " tiene almaceados " + cantidadTotal + " productos en total.");
-                cantidadTotal=0;
+                int cantidad=resultSet.getInt(3);
+                System.out.println("El almacen " + nombreAlmacen + " con id " + id + " tiene almaceados " + cantidad + " productos en total.");
             }
         }catch (SQLException a){
             System.out.println(a.toString());

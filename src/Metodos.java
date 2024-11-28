@@ -116,7 +116,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-//Todo fail al crear  no entiendo q pasa aqui ...;
+
     public void crearProducto(String nombre, Double precio, int stock, String nombre_categoria, String nif) {
         String obtenerCategoriaPG = "select id_categoria from categorias where nombre_categoria = ?";
         String obtenerProveedorPG = "select id_proveedor from proveedores where (contacto).nif = ?";
@@ -336,8 +336,8 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
                 telefono=resultSet1.getInt(8);
                 mail=resultSet1.getString(9);
                     System.out.println("-----------------Datos----del-----Producto------------");
-                    System.out.println("Nombre proveedor " + nombreProvedor + " nombre contacto " + nombreContacto + " nif " + nif + " telefono " + telefono +" mail " +mail + " categoria "  + nombreCategoria);
-                     System.out.println("Id del proveedor " +idProveedor+ " Id categoria " +idCategoria);
+                    System.out.println("Nombre proveedor: " + nombreProvedor + " nombre: " + nombreContacto + " nif: " + nif + " telefono: " + telefono +" mail: " +mail + " categoria: "  + nombreCategoria);
+                     System.out.println("Id del proveedor: " +idProveedor+ " Id categoria: " +idCategoria);
                       preparedStatement2=mySQL.prepareStatement(sentenciaProducto);
                       preparedStatement2.setInt(1,idProducto);
                       ResultSet resultSet2= preparedStatement2.executeQuery();
@@ -346,7 +346,7 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
                           nombreProducto=resultSet2.getString(2);
                           precio=resultSet2.getDouble(3);
                           stock=resultSet2.getInt(4);
-                          System.out.println("Id del producto " + id +" nombre producto " + nombreProducto + " precio " + precio + " stock " + stock);
+                          System.out.println("Id del producto: " + id +" nombre producto: " + nombreProducto + " precio: " + precio + " stock: " + stock);
                       }
                   }
         }catch (SQLException a){

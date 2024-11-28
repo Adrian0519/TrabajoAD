@@ -43,7 +43,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-
+//todo mensaje error no funciona bien, pero funciona.
     public void eliminarProveedor(int id) throws SQLException {
         String sentenciaProducto = "Delete from productos where id_proveedor = ?";
         String sentenciaAlmacen = "Delete from almacenes_productos where id_producto in (select id_producto from productos where id_proveedor = ?)";
@@ -116,7 +116,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-
+//Todo fail al crear  no entiendo q pasa aqui ...;
     public void crearProducto(String nombre, Double precio, int stock, String nombre_categoria, String nif) {
         String obtenerCategoriaPG = "select id_categoria from categorias where nombre_categoria = ?";
         String obtenerProveedorPG = "select id_proveedor from proveedores where (contacto).nif = ?";

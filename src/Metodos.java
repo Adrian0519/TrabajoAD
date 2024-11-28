@@ -300,9 +300,9 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
 }
 
     public void obtenerCantidadProductosEnCadaAlmacen() throws SQLException {
-        String sentencia1 = "SELECT DISTINCT a.id_almacen, a.nombre_almacen, ap.cantidad " +
-                "FROM almacenes a " +
-                "LEFT JOIN almacenes_productos ap ON a.id_almacen = ap.id_almacen";
+        String sentencia1 = "select a.id_almacen, a.nombre_almacen, ap.cantidad " +
+                "from almacenes a " +
+                "left join almacenes_productos ap ON a.id_almacen = ap.id_almacen";
         PreparedStatement preparedStatement1;
         try {
             preparedStatement1=posSQL.prepareStatement(sentencia1);
@@ -319,17 +319,19 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
     }
 
     public void listarTodosProductosConCategoriaYProveedor() throws SQLException {
-        String sentenciPG="select id_producto, id_proveedor, id_categoria from productos";
-        String sentenciaCategoria="select nombre_categoria from categorias where id_categoria = ?";
-        String sentenciaProveedores="select nombre_proveedor, (contacto).nombre_contacto, (contacto).nif, (contacto).telefono, (contacto).email  from proveedores  where id_proveedor = ? ";
+        String sentenciPG="select p.id_producto, p.id_proveedor, p.id_categoria, " +
+                "c.nombre_categoria, " +
+                "pr.nombre_proveedor, " +
+                "(pr.contacto).nombre_contacto, (pr.contacto).nif, (pr.contacto).telefono, (pr.contacto).email " +
+                "from productos p " +
+                "inner join categorias c on p.id_categoria = c.id_categoria " +
+                "inner join proveedores pr on p.id_proveedor = pr.id_proveedor";
         String sentenciaProducto="select * from productos where id_producto = ?";
         PreparedStatement preparedStatement1;
         PreparedStatement preparedStatement2;
-        PreparedStatement preparedStatement3;
-        PreparedStatement preparedStatement4;
         int idProducto=0;
-        int idProveedor=0;
-        int idCategoria=0;
+        int idProveedor;
+        int idCategoria;
         String nombreProvedor, nombreContacto, nif, mail, nombreCategoria , nombreProducto;
         int telefono, stock , id ;
         double precio;
@@ -340,36 +342,26 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
                 idProducto=resultSet1.getInt(1);
                 idProveedor= resultSet1.getInt(2);
                 idCategoria=resultSet1.getInt(3);
-                preparedStatement2=posSQL.prepareStatement(sentenciaProveedores);
-                preparedStatement2.setInt(1,idProveedor);
-                ResultSet resultSet2=preparedStatement2.executeQuery();
-                while (resultSet2.next()){
-                  nombreProvedor=resultSet2.getString(1);
-                  nombreContacto=resultSet2.getString(2);
-                  nif=resultSet2.getString(3);
-                  telefono=resultSet2.getInt(4);
-                  mail=resultSet2.getString(5);
+                nombreCategoria=resultSet1.getString(4);
+                nombreProvedor=resultSet1.getString(5);
+                nombreContacto=resultSet1.getString(6);
+                nif=resultSet1.getString(7);
+                telefono=resultSet1.getInt(8);
+                mail=resultSet1.getString(9);
                     System.out.println("-----------------Datos----del-----Producto------------");
-                    System.out.println("Nombre proveedor " + nombreProvedor + " nombre contacto " + nombreContacto + " nif " + nif + " telefono " + telefono +" mail " +mail);
-                  preparedStatement3=posSQL.prepareStatement(sentenciaCategoria);
-                  preparedStatement3.setInt(1,idCategoria);
-                  ResultSet resultSet3=preparedStatement3.executeQuery();
-                  while (resultSet3.next()){
-                      nombreCategoria=resultSet3.getString(1);
-                      System.out.println("Categoria " + nombreCategoria );
-                      preparedStatement4=mySQL.prepareStatement(sentenciaProducto);
-                      preparedStatement4.setInt(1,idProducto);
-                      ResultSet resultSet4= preparedStatement4.executeQuery();
-                      while (resultSet4.next()){
-                          id=resultSet4.getInt(1);
-                          nombreProducto=resultSet4.getString(2);
-                          precio=resultSet4.getDouble(3);
-                          stock=resultSet4.getInt(4);
-                          System.out.println("Nombre producto " + nombreProducto + " precio " + precio + " stock " + stock);
+                    System.out.println("Nombre proveedor " + nombreProvedor + " nombre contacto " + nombreContacto + " nif " + nif + " telefono " + telefono +" mail " +mail + " categoria "  + nombreCategoria);
+                     System.out.println("Id del proveedor " +idProveedor+ " Id categoria " +idCategoria);
+                      preparedStatement2=mySQL.prepareStatement(sentenciaProducto);
+                      preparedStatement2.setInt(1,idProducto);
+                      ResultSet resultSet2= preparedStatement2.executeQuery();
+                      while (resultSet2.next()){
+                          id=resultSet2.getInt(1);
+                          nombreProducto=resultSet2.getString(2);
+                          precio=resultSet2.getDouble(3);
+                          stock=resultSet2.getInt(4);
+                          System.out.println("Id del producto " + id +" nombre producto " + nombreProducto + " precio " + precio + " stock " + stock);
                       }
                   }
-                }
-            }
         }catch (SQLException a){
             System.out.println(a.toString());
         }

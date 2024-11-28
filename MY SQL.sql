@@ -41,6 +41,8 @@ INSERT INTO usuarios VALUES ('3','Jorge,','jorge@mail.com',1999);
 INSERT INTO pedidos VALUES ('1','1','2023-7-11');
 INSERT INTO pedidos VALUES ('2','1','2023-7-11');
 INSERT INTO pedidos VALUES ('3','3','2023-8-9');
+INSERT INTO pedidos VALUES ('4','2','2023-5-9');
 INSERT INTO pedidos_productos VALUES ('1','1','3');
 INSERT INTO pedidos_productos VALUES ('2','3','9');
 INSERT INTO pedidos_productos VALUES ('3','1','4');
+INSERT INTO pedidos_productos VALUES ('4','2','14');

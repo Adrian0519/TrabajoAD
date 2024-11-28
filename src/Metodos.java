@@ -367,41 +367,33 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
         }
     }
     public void obtenerUsuariosCompraronProductosCategoria(int idCategoria) throws SQLException {
-        String sentenciaIDProducto="select id_producto from productos where id_categoria = ?";
-        String sentenciaIDPedidos="select id_pedido from pedidos_productos where id_producto = ?";
-        String sentenciaIDUusario="select id_usuario from pedidos where id_pedido = ?";
-        String sentenciaUsuario="select nombre from usuarios where id_usuario = ?";
+        String sentenciaPG="select id_producto from productos where id_categoria=?";
+        String sentenciaMYSQL = "select n.nombre "
+                + "from pedidos_productos pr "
+                + "left join pedidos p on pr.id_pedido = p.id_pedido "
+                + "left join usuarios n on p.id_usuario = n.id_usuario "
+                + "where pr.id_producto = ?";
         PreparedStatement preparedStatement1;
         PreparedStatement preparedStatement2;
-        PreparedStatement preparedStatement3;
-        PreparedStatement preparedStatement4;
-        int id1,id2,id3;
-        String nombre;
+        ResultSet resultSet1;
+        int contador=0;
         try {
-            preparedStatement1= posSQL.prepareStatement(sentenciaIDProducto);
-            preparedStatement1.setInt(1,idCategoria);
-            ResultSet resultSet1=preparedStatement1.executeQuery();
-            while (resultSet1.next()){
-                id1=resultSet1.getInt(1);
-                preparedStatement2= mySQL.prepareStatement(sentenciaIDPedidos);
-                preparedStatement2.setInt(1,id1);
-                ResultSet resultSet2=preparedStatement2.executeQuery();
-                while (resultSet2.next()){
-                    id2=resultSet2.getInt(1);
-                    preparedStatement3= mySQL.prepareStatement(sentenciaIDUusario);
-                    preparedStatement3.setInt(1,id2);
-                    ResultSet resultSet3=preparedStatement3.executeQuery();
-                    while (resultSet3.next()){
-                        id3=resultSet3.getInt(1);
-                        preparedStatement4= mySQL.prepareStatement(sentenciaUsuario);
-                        preparedStatement4.setInt(1,id3);
-                        ResultSet resultSet4=preparedStatement4.executeQuery();
-                        while (resultSet4.next()){
-                            nombre=resultSet4.getString(1);
-                            System.out.println(nombre);
-                        }
-                    }
+            preparedStatement1 = posSQL.prepareStatement(sentenciaPG);
+            preparedStatement1.setInt(1, idCategoria);
+            resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet1.next()) {
+                int id = resultSet1.getInt(1);
+                preparedStatement2 = mySQL.prepareStatement(sentenciaMYSQL);
+                preparedStatement2.setInt(1, id);
+                ResultSet resultSet2 = preparedStatement2.executeQuery();
+                while (resultSet2.next()) {
+                    String nombre = resultSet2.getString(1);
+                    System.out.println(nombre);
+                    contador++;
                 }
+            }
+            if (contador==0){
+                System.out.println("Nadie compro productos de dicha categoria ");
             }
         }catch (SQLException a){
             System.out.println(a.toString());

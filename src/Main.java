@@ -124,6 +124,7 @@ public class Main {
                     System.out.println("Dame el id de la categoria");
                     int idCategoria=scanner.nextInt();
                     scanner.nextLine();
+                    metodos.obtenerUsuariosCompraronProductosCategoria(idCategoria);
                     break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");

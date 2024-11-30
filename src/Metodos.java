@@ -45,7 +45,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-
+//Pasamos el id y lo comprueba en caso de que exista lo borrarra si no avisara que no hay usuarios con dicha id.
     public void eliminarProveedor(int id) throws SQLException {
         String sentenciaProducto = "Delete from productos where id_proveedor = ?";
         String sentenciaAlmacen = "Delete from almacenes_productos where id_producto in (select id_producto from productos where id_proveedor = ?)";
@@ -91,7 +91,7 @@ public class Metodos {
             System.out.println(e.toString());
         }
     }
-//Eliminamos un usuario pasandole la id de dicho usuario
+//Eliminamos un usuario pasandole la id de dicho usuario si no lo hay mostrara un mensaje diciendo que no hay usuarios con dicho id.
     public void eliminarUsuario(int id) throws SQLException {
         String sentenciaPedidosProdu = "Delete from pedidos_productos where id_pedido in (select id_pedido from pedidos where id_usuario = ?)";
         String sentenciaPedidos = "Delete from pedidos where id_usuario = ?";
@@ -117,7 +117,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-
+//Insertamos los datos del producto que insertaremos en PG y ySQL
     public void crearProducto(String nombre, Double precio, int stock, String nombre_categoria, String nif) {
         String obtenerCategoriaPG = "select id_categoria from categorias where nombre_categoria = ?";
         String obtenerProveedorPG = "select id_proveedor from proveedores where (contacto).nif = ?";
@@ -194,7 +194,8 @@ public class Metodos {
             }
         }
        
-
+//Esto obtiene el id del producto si existe , en caso contrario salta un mensaje de que no existe,
+// en caso de existir eliminaria el producto y en caso de fallo en proceso lo notificaria;
         public void eliminarProductoPorNombre(String nombre) throws SQLException {
         String obtencionID="select id_producto from productos where nombre_producto = ?";
         String sentenciaAlmacenes="delete from almacenes_productos where id_producto = ?";
@@ -219,13 +220,13 @@ public class Metodos {
             }
             preparedStatementPedidosSQL = mySQL.prepareStatement(senciapedidosSQL);
             preparedStatementPedidosSQL.setInt(1, claveBorrado);
-            int borradoConfirmado1 = preparedStatementPedidosSQL.executeUpdate();
-                preparedStatementProductosSQL = mySQL.prepareStatement(senciaProductoSQL);
-                preparedStatementProductosSQL.setInt(1, claveBorrado);
-                int borradoConfirmado2 = preparedStatementProductosSQL.executeUpdate();
+            preparedStatementPedidosSQL.executeUpdate();
+            preparedStatementProductosSQL = mySQL.prepareStatement(senciaProductoSQL);
+            preparedStatementProductosSQL.setInt(1, claveBorrado);
+            preparedStatementProductosSQL.executeUpdate();
             preparedStatementAlmacenes = posSQL.prepareStatement(sentenciaAlmacenes);
             preparedStatementAlmacenes.setInt(1, claveBorrado);
-            int borradoConfirmado3 = preparedStatementAlmacenes.executeUpdate();
+            preparedStatementAlmacenes.executeUpdate();
             preparedStatementProductos = posSQL.prepareStatement(sentenciaProductopos);
             preparedStatementProductos.setInt(1, claveBorrado);
             int borradoConfirmado4 = preparedStatementProductos.executeUpdate();
@@ -238,7 +239,7 @@ public class Metodos {
                 System.out.println(d.toString());
             }
         }
-
+//Le pasamos un stock y luego le mostramos al usuario los productos por debajo de dicha cantidad.
 public void listarProductosBajoStock(int stock) throws SQLException {
         String sentenciQuery="select nombre_producto from productos where stock < ?";
         PreparedStatement preparedStatement;
@@ -259,7 +260,8 @@ public void listarProductosBajoStock(int stock) throws SQLException {
             System.out.println(a.toString());
         }
 }
-
+// Mostramos todos los pedidos realizados por cada usuario con su id, tambien se mostraran los que realizaron 0 pedidos,
+//    ya que lo que buscamos es mostrar los pedidos realizados por cada usuario incluido el que no pidio.
 public void obtenerTotalPedidosUsuarios() throws SQLException {
         String sentencia1="select id_usuario,nombre from usuarios";
         String sentencia2="select id_pedido from pedidos where id_usuario = ?";
@@ -286,7 +288,7 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
         }
 
 }
-
+//Nos muestra la cantidad de productos que guarda cada almacen.
     public void obtenerCantidadProductosEnCadaAlmacen() throws SQLException {
         String sentencia1 = "select a.id_almacen, a.nombre_almacen, ap.cantidad " +
                 "from almacenes a " +
@@ -305,7 +307,7 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
             System.out.println(a.toString());
         }
     }
-
+// Mostramos todos los datos del producto sacando la id de PG y luego lo usamos para sacarlo de MYSQL
     public void listarTodosProductosConCategoriaYProveedor() throws SQLException {
         String sentenciPG="select p.id_producto, p.id_proveedor, p.id_categoria, " +
                 "c.nombre_categoria, " +
@@ -354,6 +356,8 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
             System.out.println(a.toString());
         }
     }
+    //Aqui para conseguir las compras por categoria scamos el id_producto de PG y luego en Mysql se busca sacar
+    // los pedidos a partir de scar el id_pedido para posteriormente sacar el id_usuario y luego el nombre del usuario.
     public void obtenerUsuariosCompraronProductosCategoria(int idCategoria) throws SQLException {
         String sentenciaPG="select id_producto from productos where id_categoria=?";
         String sentenciaMYSQL = "select n.nombre "

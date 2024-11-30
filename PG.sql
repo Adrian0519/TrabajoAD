@@ -44,9 +44,9 @@ primary key(id_almacen , id_producto)
 
 INSERT INTO proveedores (nombre_proveedor, contacto)
 VALUES
-    ('fruterias blancas', ('Paola', '123456789a', '666777999', 'frutas@gmail.com')),
-    ('carpinteria blanca', ('Pablo', '987654321b', '111222333', 'carpinterias@gmail.com')),
-    ('supermercado blanco', ('Mark', '444555666c', '444555666', 'supermercado@gmail.com'));
+    ('fruterias blancas', ('Paola', '12345678a', '666777999', 'frutas@gmail.com')),
+    ('carpinteria blanca', ('Pablo', '98765432b', '111222333', 'carpinterias@gmail.com')),
+    ('supermercado blanco', ('Mark', '44455566c', '444555666', 'supermercado@gmail.com'));
 
 INSERT INTO categorias (nombre_categoria)
 VALUES

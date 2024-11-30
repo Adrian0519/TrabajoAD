@@ -58,11 +58,13 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Dime el nombre del proveedor");
-                    String nombre= scanner.next();
-                    scanner.nextLine();
+                    String nombre= scanner.nextLine();
                     System.out.println("Inserte el NIF");
-                    String nif= scanner.next();
-                    scanner.nextLine();
+                    String nif= scanner.nextLine();
+                    if (!nif.matches("^[1-9]\\d{7}[A-Za-z]$")) {
+                        System.out.println("Error: El NIF no es correcto.");
+                        break;
+                    }
                     System.out.println("Necesito el tlf");
                     int tlf;
                     try {
@@ -74,8 +76,11 @@ public class Main {
                         break;
                     }
                     System.out.println("Ahora inserte el mail");
-                    String mail= scanner.next();
-                    scanner.nextLine();
+                    String mail= scanner.nextLine();
+                    if (!mail.matches("^[^@]+@[A-Za-z]+\\.[A-Za-z]+$")) {
+                        System.out.println("Error: El correo electrónico no tiene un formato válido.");
+                        break;
+                    }
                     metodos.crearNuevoProveedor(nombre,nif,tlf,mail);
                     break;
                 case 3:
@@ -98,6 +103,10 @@ public class Main {
                     System.out.println("Insertar el mail del usuario");
                     String mailInsertar= scanner.next();
                     scanner.nextLine();
+                    if (!mailInsertar.matches("^[^@]+@[A-Za-z]+\\.[A-Za-z]+$")) {
+                        System.out.println("Error: el correo electrónico no tiene un formato valido.");
+                        break;
+                    }
                     System.out.println("Por ultimo el anho de nacimiento");
                     int insertarNacimiento;
                     try {

@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -37,8 +38,14 @@ public class Main {
             System.out.println("12.-Obtener todos los Usuarios que han comprado algún producto de una categoria dada");
             System.out.println("------------------------");
             System.out.println("0.-Salir del programa");
-            eleccion= scanner.nextInt();
-            scanner.nextLine();
+            try {
+                eleccion = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                eleccion = 99;
+            }
+
             switch (eleccion){
                 case 1:
                     System.out.println("Dime el nombre de la categoria que deseas crear");
@@ -57,8 +64,15 @@ public class Main {
                     String nif= scanner.next();
                     scanner.nextLine();
                     System.out.println("Necesito el tlf");
-                    int tlf= scanner.nextInt();
-                    scanner.nextLine();
+                    int tlf;
+                    try {
+                        tlf = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el telefono debe ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     System.out.println("Ahora inserte el mail");
                     String mail= scanner.next();
                     scanner.nextLine();
@@ -66,8 +80,15 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Dime el id del provedor");
-                    int id= scanner.nextInt();
-                    scanner.nextLine();
+                    int id;
+                    try {
+                        id = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el id debe ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     metodos.eliminarProveedor(id);
                     break;
                 case 4:
@@ -78,25 +99,53 @@ public class Main {
                     String mailInsertar= scanner.next();
                     scanner.nextLine();
                     System.out.println("Por ultimo el anho de nacimiento");
-                    int insertarNacimiento=scanner.nextInt();
-                    scanner.nextLine();
+                    int insertarNacimiento;
+                    try {
+                        insertarNacimiento = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el anho tiene que ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     metodos.crearUsuario(nombreInsertar,mailInsertar,insertarNacimiento);
                     break;
                 case 5:
                     System.out.println("Inserta el id del usuario a eliminar");
-                    int idEliminar=scanner.nextInt();
-                    scanner.nextLine();
+                    int idEliminar;
+                    try {
+                        idEliminar = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el id debe ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     metodos.eliminarUsuario(idEliminar);
                     break;
                 case 6:
                     System.out.println("Inserta el nombre del producto a crear");
                     String productoCrear= scanner.nextLine();
                     System.out.println("Insertame su precio");
-                    double precio= scanner.nextDouble();
-                    scanner.nextLine();
+                    double precio;
+                    try {
+                        precio = scanner.nextDouble();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el precio debe ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     System.out.println("Dime el stock");
-                    int stock= scanner.nextInt();
-                    scanner.nextLine();
+                    int stock;
+                    try {
+                        stock = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el stock debe ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     System.out.println("Ahora quiero el nombre del categoria");
                     String categoria=scanner.nextLine();
                     System.out.println("Puedes darme el nif del proveedor");
@@ -110,8 +159,15 @@ public class Main {
                     break;
                 case 8:
                     System.out.println("Dime el stock y t mostraremos con los productos con menos de dicho stock");
-                    int stockMenor= scanner.nextInt();
-                    scanner.nextLine();
+                    int stockMenor;
+                    try {
+                        stockMenor = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el stock debe ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     metodos.listarProductosBajoStock(stockMenor);
                     break;
                 case 9:
@@ -125,15 +181,22 @@ public class Main {
                     break;
                 case 12:
                     System.out.println("Dame el id de la categoria");
-                    int idCategoria=scanner.nextInt();
-                    scanner.nextLine();
+                    int idCategoria;
+                    try {
+                        idCategoria = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: el id debe ser un numero.");
+                        scanner.nextLine();
+                        break;
+                    }
                     metodos.obtenerUsuariosCompraronProductosCategoria(idCategoria);
                     break;
                 case 0:
                     System.out.println("Gracias, se cerrara el programa");
                     break;
                 default:
-                    System.out.println("Dato incorrecto introduzca de nuevo el numero");
+                    System.out.println("Dato incorrecto introduzca un numero correcto");
                     break;
             }
 

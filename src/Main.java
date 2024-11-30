@@ -1,9 +1,9 @@
 import java.sql.SQLException;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    //Menu mediante bucle while que le permitira realizar los metodos que quiera, si pulsa un número incorrecto le dara
+    //un error dicho y le pedira que ingrese un caracter de la lista, para finalizar las operaciones pulsara 0.
     public static void main(String[] args) throws SQLException {
         Metodos metodos=new Metodos();
         Scanner scanner=new Scanner(System.in);
@@ -42,8 +42,11 @@ public class Main {
             switch (eleccion){
                 case 1:
                     System.out.println("Dime el nombre de la categoria que deseas crear");
-                    String nombreCategoria= scanner.next();
-                    scanner.nextLine();
+                    String nombreCategoria= scanner.nextLine();
+                    if (nombreCategoria.isBlank()){
+                        System.out.println("Error no puede quedar vacio");
+                        break;
+                    }
                     metodos.crearCategoria(nombreCategoria);
                     break;
                 case 2:

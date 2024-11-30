@@ -5,6 +5,7 @@ public class Metodos {
     private static Connection posSQL = SinglettonPosSQL.getInstance();
     private static Connection mySQL = SinglettonMySQL.getInstance();
 
+    //Metodo para crear la categoria, insetara en categoria el dato introducido por el usuario.
     public void crearCategoria(String nombreCategoria) throws SQLException {
         String senteciaSQL = "Insert into categorias (nombre_categoria) values (?)";
         PreparedStatement preparedStatement;
@@ -22,7 +23,8 @@ public class Metodos {
 
         }
     }
-
+    //Le pasamos todos los datos del proveedor para insertarlos a pg y asi crear un nuevo proveedor, teniendo en cuenta
+    //que contacto es un objeto y la id se autogenera.
     public void crearNuevoProveedor(String nombreProveedor, String nif, int telefono, String email) throws SQLException {
         String sentenciaSQL = "Insert into proveedores (nombre_proveedor, contacto) values (?, ROW (?, ?, ?, ?))";
         PreparedStatement preparedStatement;
@@ -43,7 +45,7 @@ public class Metodos {
             e.printStackTrace();
         }
     }
-//todo mensaje error no funciona bien, pero funciona.
+
     public void eliminarProveedor(int id) throws SQLException {
         String sentenciaProducto = "Delete from productos where id_proveedor = ?";
         String sentenciaAlmacen = "Delete from almacenes_productos where id_producto in (select id_producto from productos where id_proveedor = ?)";
@@ -60,8 +62,7 @@ public class Metodos {
             preparedStatement1.executeUpdate();
             preparedStatement2 = posSQL.prepareStatement(senciaProveedorL);
             preparedStatement2.setInt(1, id);
-            preparedStatement2.executeUpdate();
-            int comprobar = preparedStatement.executeUpdate();
+            int comprobar = preparedStatement2.executeUpdate();
             if (comprobar > 0) {
                 System.out.println("Se elimino de forma exitosa el proveedor");
             } else {
@@ -71,7 +72,7 @@ public class Metodos {
             System.out.println(e.toString());
         }
     }
-
+//Metodo que crea un usuario en my sql en caso de error mostrara un mensaje de error.
     public void crearUsuario(String nombre, String email, int anho_nacimiento) throws SQLException {
         String sentenciaSQL = "Insert into usuarios (nombre, email, ano_nacimiento) values (?, ?, ?)";
         PreparedStatement preparedStatement;
@@ -81,7 +82,7 @@ public class Metodos {
             preparedStatement.setString(2, email);
             preparedStatement.setInt(3, anho_nacimiento);
             int comprobacion = preparedStatement.executeUpdate();
-            if (comprobacion >= 1) {
+            if (comprobacion > 1) {
                 System.out.println("Datos del usario insertados correctamente");
             } else {
                 System.out.println("Error en la inseccion de datos");
@@ -90,7 +91,7 @@ public class Metodos {
             System.out.println(e.toString());
         }
     }
-
+//Eliminamos un usuario pasandole la id de dicho usuario
     public void eliminarUsuario(int id) throws SQLException {
         String sentenciaPedidosProdu = "Delete from pedidos_productos where id_pedido in (select id_pedido from pedidos where id_usuario = ?)";
         String sentenciaPedidos = "Delete from pedidos where id_usuario = ?";

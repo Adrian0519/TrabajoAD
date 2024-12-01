@@ -82,7 +82,7 @@ public class Metodos {
             preparedStatement.setString(2, email);
             preparedStatement.setInt(3, anho_nacimiento);
             int comprobacion = preparedStatement.executeUpdate();
-            if (comprobacion > 1) {
+            if (comprobacion > 0) {
                 System.out.println("Datos del usario insertados correctamente");
             } else {
                 System.out.println("Error en la inseccion de datos");
@@ -385,7 +385,7 @@ public void obtenerTotalPedidosUsuarios() throws SQLException {
                 }
             }
             if (contador==0){
-                System.out.println("Nadie compro productos de dicha categoria ");
+                System.out.println("Nadie compro productos de dicha categoria");
             }
         }catch (SQLException a){
             System.out.println(a.toString());

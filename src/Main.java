@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class Main {
     //Menu mediante bucle while que le permitira realizar los metodos que quiera, si pulsa un número incorrecto le dara
-    //un error dicho y le pedira que ingrese un caracter de la lista, para finalizar las operaciones pulsara 0.
+    //un error dicho y le pedira que ingrese un caracter de la lista, para finalizar las operaciones pulsara 0,
+    // Tambien tiene excepciones para que no rompa el programa y alguna otra (En el metodo de eliminar producto
+    // por nombre se permite el espacion en blanco por si el usuario consigue meterlo de alhuna manera se podra borrarlo).
     public static void main(String[] args) throws SQLException {
         Metodos metodos=new Metodos();
         Scanner scanner=new Scanner(System.in);
@@ -51,7 +53,7 @@ public class Main {
                     System.out.println("Dime el nombre de la categoria que deseas crear");
                     String nombreCategoria= scanner.nextLine();
                     if (nombreCategoria.isBlank()){
-                        System.out.println("Error no puede quedar vacio");
+                        System.out.println("Error: no puede quedar vacio");
                         break;
                     }
                     metodos.crearCategoria(nombreCategoria);
@@ -98,11 +100,9 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Inserta el nombre del usuario");
-                    String nombreInsertar=scanner.next();
-                    scanner.nextLine();
+                    String nombreInsertar=scanner.nextLine();
                     System.out.println("Insertar el mail del usuario");
-                    String mailInsertar= scanner.next();
-                    scanner.nextLine();
+                    String mailInsertar= scanner.nextLine();
                     if (!mailInsertar.matches("^[^@]+@[A-Za-z]+\\.[A-Za-z]+$")) {
                         System.out.println("Error: el correo electrónico no tiene un formato valido.");
                         break;
@@ -113,7 +113,7 @@ public class Main {
                         insertarNacimiento = scanner.nextInt();
                         scanner.nextLine();
                     } catch (InputMismatchException e) {
-                        System.out.println("Error: el anho tiene que ser un numero.");
+                        System.out.println("Error: el anho tiene que ser un numero .");
                         scanner.nextLine();
                         break;
                     }
@@ -126,7 +126,7 @@ public class Main {
                         idEliminar = scanner.nextInt();
                         scanner.nextLine();
                     } catch (InputMismatchException e) {
-                        System.out.println("Error: el id debe ser un numero.");
+                        System.out.println("Error: el id debe ser un numero .");
                         scanner.nextLine();
                         break;
                     }
@@ -151,7 +151,7 @@ public class Main {
                         stock = scanner.nextInt();
                         scanner.nextLine();
                     } catch (InputMismatchException e) {
-                        System.out.println("Error: el stock debe ser un numero.");
+                        System.out.println("Error: el stock debe ser un numero entero.");
                         scanner.nextLine();
                         break;
                     }
@@ -173,7 +173,7 @@ public class Main {
                         stockMenor = scanner.nextInt();
                         scanner.nextLine();
                     } catch (InputMismatchException e) {
-                        System.out.println("Error: el stock debe ser un numero.");
+                        System.out.println("Error: el stock debe ser un numero entero.");
                         scanner.nextLine();
                         break;
                     }

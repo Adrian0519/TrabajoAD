@@ -5,7 +5,7 @@ use proyecto;
 create table productos(
 id_producto int auto_increment key,
 nombre_producto varchar(100) not null,
-precio int not null,
+precio double not null,
 stock int not null
 );
 
